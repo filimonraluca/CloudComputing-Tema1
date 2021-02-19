@@ -5,12 +5,19 @@ var post_data = {
 };
 y.addEventListener("click", function () {
   query = document.getElementById("youtube").value
-  console.log(query)
-  fetch("http://localhost:3001/api/youtube?query=" + query)
+  url = "http://localhost:3001/api/youtube?query=" + query;
+  var req_info ={
+    method: "GET",
+    body: null,
+    url: url
+  }
+  console.log(req_info)
+  fetch(url)
     .then((data) => {
       return data.json();
     })
     .then((res) => {
+      console.log(res)
       data = res.data;
       post_data.youtube_link = data;
       document.getElementById("link-youtube").href=data;
@@ -23,11 +30,19 @@ y.addEventListener("click", function () {
 
 var u = document.getElementById("search-unsplash")
 u.addEventListener("click", function () {
-  fetch("http://localhost:3001/api/image")
+  url = "http://localhost:3001/api/image";
+  var req_info ={
+    method: "GET",
+    body: null,
+    url: url
+  }
+  console.log(req_info)
+  fetch(url)
     .then((data) => {
       return data.json();
     })
     .then((res) => {
+      console.log(res)
       data = res.data;
       post_data.unsplash_link = data
       document.getElementById("link-unsplash").href=data;
@@ -50,7 +65,14 @@ post_button.addEventListener("click", function () {
   }
 })
 async function postData(data) {
-  fetch("http://localhost:3001/api/twitter", {
+  url = "http://localhost:3001/api/twitter";
+  var req_info ={
+    method: "POST",
+    body: JSON.stringify(data),
+    url: url
+  }
+  console.log(req_info)
+  fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
   })
@@ -58,6 +80,7 @@ async function postData(data) {
       return data.json();
     })
     .then((res) => {
+      console.log(res)
       data = res.data;
       document.getElementById("succes-message").innerHTML = "You successfully tweeted!"
       document.getElementById("post-response").innerHTML = data;
