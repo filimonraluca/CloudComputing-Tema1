@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="./index.css" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400&display=swap" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/cec80c6e23.js" crossorigin="anonymous"></script>
+  <title>CloudComputing</title>
+</head>
+
+<body>
+  <div class="container">
+    <div id="container-title">
+    </div>
+    <div class="statistics-container">
+      <article class="card" id="bright-card">
+        <h3>Get youtube video link:</h3>
+        <a id="link-youtube" href="" target="_blank"></a>
+        <input placeholder="search on youtube" id="youtube" name="youtube" />
+        <button id="search-youtube">Search</button>
+      </article>
+      <article class="card" id="bright-card">
+        <h3>Get unsplash image:</h3>
+        <a id="link-unsplash" href="" target="_blank"></a>
+        <button class="big-button" id="search-unsplash">Search</button>
+      </article>
+      <article class="card" id="bright-card">
+        <h3>Post on twitter:</h3>
+        <p id="error-message"></p>
+        <p id="succes-message"></p>
+        <p id="post-response"></p>
+        <button class="big-button" id="post">Post</button>
+      </article>
+    </div>
+    <script src="./util.js"></script>
+</body>
+
+</html>

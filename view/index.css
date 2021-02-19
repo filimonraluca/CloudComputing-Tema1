@@ -1,0 +1,129 @@
+.container {
+    max-width: 1100px;
+    margin: auto;
+  }
+  
+  .statistics-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem 0rem;
+  }
+
+  
+  .card {
+    padding: 1rem;
+    background: #efefef;
+    margin: 0 20px 0 20px;
+  }
+  #bright-card {
+    padding-top: 2rem;
+  }
+  a {
+    text-decoration: none;
+    color: #13517a;
+  }
+  
+  .card h3 {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-size: 95%;
+    text-align: center;
+  }
+  .card p {
+    font-size: 95%;
+  }
+  
+  .card h3:after {
+    border: #2980b9 solid 1px;
+    display: block;
+    content: " ";
+    width: 40%;
+    margin: 4px auto;
+  }
+  
+  .card h2 {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-size: 30px;
+    transition: 0.5s;
+  }
+  
+  .card h2:hover {
+    font-size: 33px;
+  }
+  
+  .card h2:after {
+    border: #2980b9 solid 1px;
+    display: block;
+    content: " ";
+    width: 40%;
+    margin: 4px auto;
+    transition: width 0.5s;
+  }
+  
+  .card h2:hover::after {
+    width: 60%;
+  }
+
+  #container-title {
+    margin-bottom: 3rem;
+    text-align: center;
+    font-size: 150%;
+  }
+  #container-title a:after {
+    border: #2980b9 solid 1px;
+    display: block;
+    content: " ";
+    width: 20%;
+    margin: 20px auto;
+    transition: width 0.5s;
+  }
+  
+  #container-title a:hover {
+    cursor: pointer;
+    font-size: 120%;
+    transition: 0.5s;
+    color: #256692;
+  }
+  
+  #container-title a:hover::after {
+    width: 35%;
+  }
+  .container h2:hover::after {
+    width: 35%;
+  }
+  input {
+    border: none;
+    padding: 12px 15px;
+    margin: 8px 0;
+    width: 90%;
+  }
+
+button {
+  float: right;
+  bottom: 0px;
+  padding: 10px 15px;
+  font-weight: 350;
+  text-decoration: none;
+  background-color: #2980b9;
+  color: white;
+  transition: background-color 0.2s;
+  width: 150px;
+  /* margin-right: 30px; */
+}
+
+button:hover,
+button:active {
+  background-color: #1d5a81;
+}
+.big-button{
+    float: none;
+    width:100%;
+}
+#error-message{
+  color:red;
+}
+#succes-message{
+  color:green;
+}
