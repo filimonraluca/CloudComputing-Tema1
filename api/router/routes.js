@@ -1,4 +1,4 @@
-const { controller } = require("../controllers/index");
+const { controller,metricsController } = require("../controllers/index");
 
 const routes = [
     {
@@ -16,5 +16,10 @@ const routes = [
         path: "/api/twitter",
         handler: controller.postTweet.bind(controller),
       },
+      {
+        method: "GET",
+        path: "/api/metrics",
+        handler: metricsController.getMetrics.bind(metricsController)
+      }
 ];
 module.exports = routes;

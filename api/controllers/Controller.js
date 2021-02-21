@@ -3,10 +3,11 @@ const fetch = require('node-fetch');
 const { twitter_config, youtube_key, unsplash_client_id } = require("../config");
 const twitter = require('twitter-lite');
 const client = new twitter(twitter_config);
+const {metric} = require("../metrics/index.js");
 const CREATED = 201;
 class Controller {
   constructor() { }
-  async getYoutubeLink(req, res, param) {
+  async getYoutubeLink(start_time, req, res, param, body) {
     const url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=' + param.query + "&key=" + youtube_key;
     var req_info = {
       method: "GET",
@@ -20,12 +21,12 @@ class Controller {
         return "https://www.youtube.com/watch?v=" + json.items[1].id.videoId
       })
       .catch((error) => console.log(error))
-    return helpers.success(res, response);
+    return helpers.success(start_time, res, response);
   }
   catch(error) {
-    return helpers.error(res, error);
+    return helpers.error(start_time, res, error);
   }
-  async getUnsplashImage(req, res, param) {
+  async getUnsplashImage(start_time, req, res, param, body) {
     const url = "https://api.unsplash.com/photos/random?client_id=" + unsplash_client_id
     var req_info = {
       method: "GET",
@@ -39,13 +40,13 @@ class Controller {
         return json.urls.raw
       })
       .catch((error) => error)
-    return helpers.success(res, response);
+    return helpers.success(start_time, res, response);
   }
   catch(error) {
-    return helpers.error(res, error);
+    return helpers.error(start_time, res, error);
   }
 
-  postTweet(req, res, param, body) {
+  postTweet(start_time, req, res, param, body) {
     const { youtube_link, unsplash_link } = body;
     const update_json = { status: youtube_link.concat(" ", unsplash_link) }
     var post_response = ""
@@ -59,11 +60,12 @@ class Controller {
       result => {
         console.log(result)
         post_response = 'Message : "' + result.text + '"';
-        return helpers.success(res, post_response, CREATED);
+        metric.increaseTwitterPosts();
+        return helpers.success(start_time, res, post_response, CREATED);
       }).catch((error) => error)
   }
   catch(error) {
-    return helpers.error(res, error);
+    return helpers.error(start_time, res, error);
   }
 }
 
