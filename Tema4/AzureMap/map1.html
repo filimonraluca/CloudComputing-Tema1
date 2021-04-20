@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Map Search</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Add references to the Azure Maps Map control JavaScript and CSS files. -->
+    <link rel="stylesheet" href="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.css" type="text/css">
+    <script src="https://atlas.microsoft.com/sdk/javascript/mapcontrol/2/atlas.min.js"></script>
+
+    <!-- Add a reference to the Azure Maps Services Module JavaScript file. -->
+    <script src="https://atlas.microsoft.com/sdk/javascript/service/2/atlas-service.min.js"></script>
+
+    <script>
+        function GetMap() {
+            //Instantiate a map object
+            var map = new atlas.Map("myMap", {
+                view: 'Auto',
+                //Add your Azure Maps subscription key to the map SDK. Get an Azure Maps key at https://azure.com/maps
+                authOptions: {
+                    authType: 'subscriptionKey',
+                    subscriptionKey: '-h00C1AQEsVKZmX3jhpQWs6hAPdTAhe2hQEMYyahUCQ',
+                }
+            });
+            map.events.add('ready', function () {
+                const url = "https://gettweetsfunction.azurewebsites.net/api/GetTweets";
+                fetch(url)
+                    .then((data) => {
+                        return data.json();
+                    })
+                    .then((res) => {
+                        // console.log(res);
+                        res.forEach(element => {
+                            console.log(element.tweetText);
+                            console.log(element.placeName);
+                            
+                            var coordinates = element.placeCoordinates[0];
+                            
+                            var sentimentScores = element.sentimentAnalysisScore;
+                            var maxScore = Math.max.apply(Math, Object.values(sentimentScores));
+                            var maxSentiment = Object.keys(sentimentScores).find(key => sentimentScores[key] === maxScore);
+                            var color = "DodgerBlue";
+                            if(maxSentiment === "positive")
+                            {
+                                color = "Green";
+                            }
+                            if(maxSentiment === "negative")
+                            {
+                                color = "Red";
+                            }
+
+                            var marker = new atlas.HtmlMarker({
+                            color: color,
+                            // text: element.placeName,
+                            position: coordinates,
+                            popup: new atlas.Popup({
+                                content: `<div style="padding:10px">${element.tweetText}</div>`,
+                                pixelOffset: [0, -30]
+                                    })
+                              });
+
+                            map.markers.add(marker);
+                            map.events.add('click', marker, () => {
+                                marker.togglePopup();
+                            });
+                            // return res;
+                        });
+                        
+                    })
+                    .catch((error) => console.log(error));
+                //Create a HTML marker and add it to the map.
+
+                //Add a click event to toggle the popup.
+            });
+        }
+    </script>
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        #myMap {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body onload="GetMap()">
+    <div id="myMap"></div>
+</body>
+
+</html>
